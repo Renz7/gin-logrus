@@ -15,9 +15,12 @@ type FieldFunc func(ctx *gin.Context) logrus.Fields
 
 func StringFields(key string) FieldFunc {
 	return func(ctx *gin.Context) logrus.Fields {
-		return logrus.Fields{
-			"key": ctx.GetString(key),
+		if key != "" {
+			return logrus.Fields{
+				key: ctx.GetString(key),
+			}
 		}
+		return nil
 	}
 }
 
